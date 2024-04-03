@@ -1,0 +1,26 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html{
+    scroll-behavior: smooth;
+}
+
+.bounce{
+    animation-name: bounceAnimation;
+    animation-duration: 800ms;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+@keyframes bounceAnimation {
+    0%{
+        transform: translate(0, -25%);
+    }
+    
+
+    100%{
+        transform: translate(0, 25%);
+    }
+}
