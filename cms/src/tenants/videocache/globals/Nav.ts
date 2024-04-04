@@ -1,5 +1,5 @@
 import { GlobalConfig } from "payload/types";
-import { tenantPrefix } from "../../constants";
+import { tenantPrefix } from "../../../constants";
 
 const Nav: GlobalConfig = {
   slug: tenantPrefix.VIDEOCACHE + "nav",

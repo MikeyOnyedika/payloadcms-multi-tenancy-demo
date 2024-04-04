@@ -1,5 +1,5 @@
 import { CollectionConfig } from "payload/types";
-import { tenantPrefix } from "../../constants";
+import { tenantPrefix } from "../../../constants";
 
 export const Pages: CollectionConfig = {
   slug: tenantPrefix.VIDEOCACHE + "pages",

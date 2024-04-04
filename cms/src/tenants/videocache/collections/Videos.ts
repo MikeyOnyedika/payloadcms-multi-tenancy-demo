@@ -1,5 +1,5 @@
 import { CollectionConfig } from "payload/types";
-import { tenantPrefix } from "../../constants";
+import { tenantPrefix } from "../../../constants";
 import path from "path";
 
 export const Videos: CollectionConfig = {
