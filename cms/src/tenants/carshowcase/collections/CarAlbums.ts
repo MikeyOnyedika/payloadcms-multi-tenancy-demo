@@ -5,7 +5,8 @@ import MetaData from "../../../fields/MetaData";
 const CarAlbums: CollectionConfig = {
   slug: tenantPrefix.CARSHOWCASE + "car_albums",
   admin: {
-    useAsTitle: "title",
+    useAsTitle: "slug",
+    defaultColumns: ["slug", "cars", "id"],
   },
   fields: [
     {
@@ -14,6 +15,11 @@ const CarAlbums: CollectionConfig = {
       label: "Slug",
     },
     MetaData,
+    {
+      name: "backgroundImage",
+      type: "upload",
+      relationTo: tenantPrefix.CARSHOWCASE + "images",
+    },
     {
       name: "cars",
       type: "array",
