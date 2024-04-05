@@ -3,6 +3,9 @@ import { Field } from "payload/types";
 const MetaData: Field = {
   type: "group",
   name: "metaData",
+  admin: {
+    position: "sidebar",
+  },
   fields: [
     {
       name: "title",
