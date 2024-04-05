@@ -5,3 +5,4 @@ node_modules
 .DS_Store
 .env
 /src/tenants/**/media/*
+/src/payload-types.ts
