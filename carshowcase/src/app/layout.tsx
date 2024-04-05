@@ -18,7 +18,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`text-gray-900 flex flex-col items-center ${font.className}`}>
+      <body
+        className={`text-gray-900 flex flex-col items-center ${font.className}`}
+      >
         <Header />
         {children}
         <Footer />

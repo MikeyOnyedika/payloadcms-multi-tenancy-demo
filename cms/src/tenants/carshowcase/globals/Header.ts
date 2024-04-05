@@ -3,6 +3,9 @@ import { tenantPrefix } from "../../../constants";
 
 const Header: GlobalConfig = {
   slug: tenantPrefix.CARSHOWCASE + "header",
+  access: {
+    
+  },
   fields: [
     {
       name: "companyName",

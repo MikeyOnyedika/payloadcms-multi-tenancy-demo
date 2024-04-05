@@ -20,13 +20,5 @@ export const Pages: CollectionConfig = {
         },
       ],
     },
-    {
-        name: "content",
-        type: "blocks",
-        label: "Content",
-        blocks: [
-             
-        ]
-    }
   ],
 };

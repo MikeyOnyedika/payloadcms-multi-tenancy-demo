@@ -7,6 +7,7 @@ import { slateEditor } from "@payloadcms/richtext-slate";
 import { buildConfig } from "payload/config";
 
 import AdminUsers from "./collections/AdminUsers";
+import Tenants from "./collections/Tenants"
 import VideocacheCollections from "./tenants/videocache/collections";
 import VideocacheGlobals from "./tenants/videocache/globals";
 import CarshowcaseCollections from "./tenants/carshowcase/collections";
@@ -20,6 +21,7 @@ export default buildConfig({
   editor: slateEditor({}),
   collections: [
     AdminUsers,
+    Tenants,
 
     // videocache-specific collections
     ...VideocacheCollections,
