@@ -4,6 +4,7 @@ import MetaData from "../../../fields/MetaData";
 import Hero from "../blocks/Hero";
 import Partners from "../blocks/Partners";
 import SocialLinks from "../blocks/SocialLinks";
+import CarAlbumCards from "../blocks/CarAlbumCards";
 
 export const Pages: CollectionConfig = {
   slug: tenantPrefix.CARSHOWCASE + "pages",
@@ -18,14 +19,19 @@ export const Pages: CollectionConfig = {
       type: "text",
       required: true,
       saveToJWT: true,
+      admin: {
+        position: "sidebar",
+      },
     },
     MetaData,
     {
       name: "content",
       type: "blocks",
       label: "Content",
-      // TODO: see if you can use CarAlbumCards or if you should just directly query the CarAlbums collection. The major incentive for CarAlbumCards is the title "Categories" and just getting the name and background Image for that album instead of it's whole data
-      blocks: [Hero, Partners, SocialLinks],
+      admin: {
+        initCollapsed: true,
+      },
+      blocks: [Hero, Partners, SocialLinks, CarAlbumCards],
     },
   ],
 };

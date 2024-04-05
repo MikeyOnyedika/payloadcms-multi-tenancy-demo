@@ -10,10 +10,11 @@ const CarAlbumCards: Block = {
       label: "Label",
     },
     {
-      name: "defaultCar",
-      label: "Default Car Image",
+      name: "albums",
       type: "relationship",
-      relationTo: tenantPrefix.CARSHOWCASE + "images",
+      relationTo: tenantPrefix.CARSHOWCASE + "car_albums",
+      maxDepth: 1,
+      hasMany: true,
     },
   ],
 };
