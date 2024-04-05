@@ -5,9 +5,9 @@ const Partners: Block = {
   slug: tenantPrefix.CARSHOWCASE + "partners",
   fields: [
     {
-      name: "title",
+      name: "label",
       type: "text",
-      label: "Section Title",
+      label: "Label",
     },
     {
       name: "partners",
