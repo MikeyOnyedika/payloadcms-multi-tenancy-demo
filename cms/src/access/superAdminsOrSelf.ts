@@ -1,7 +1,8 @@
 import { Access } from "payload/config";
 import { User } from "payload/generated-types";
+import { FieldAccess } from "payload/types";
 
-const superAdminsOrSelf: Access<any, User> = ({ req }) => {
+const superAdminsOrSelf: Access<any, User>  = ({ req }) => {
   // grant permissioni if it's a super admin or if the user is the user they're trying to edit
   if (req.user.roles.includes("super-admin")) {
     return true;

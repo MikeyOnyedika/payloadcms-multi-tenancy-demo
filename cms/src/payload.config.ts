@@ -6,7 +6,7 @@ import { webpackBundler } from "@payloadcms/bundler-webpack";
 import { slateEditor } from "@payloadcms/richtext-slate";
 import { buildConfig } from "payload/config";
 
-import AdminUsers from "./collections/AdminUsers";
+import Users from "./collections/Users";
 import Tenants from "./collections/Tenants"
 import VideocacheCollections from "./tenants/videocache/collections";
 import VideocacheGlobals from "./tenants/videocache/globals";
@@ -15,12 +15,12 @@ import CarshowcaseGlobals from "./tenants/carshowcase/globals";
 
 export default buildConfig({
   admin: {
-    user: AdminUsers.slug,
+    user: Users.slug,
     bundler: webpackBundler(),
   },
   editor: slateEditor({}),
   collections: [
-    AdminUsers,
+    Users,
     Tenants,
 
     // videocache-specific collections

@@ -5,12 +5,20 @@ import Hero from "../blocks/Hero";
 import Partners from "../blocks/Partners";
 import SocialLinks from "../blocks/SocialLinks";
 import CarAlbumCards from "../blocks/CarAlbumCards";
+import { carshowcaseAdmin } from "../access/carshowcaseAdmin";
+import { carshowcaseAdminOrUser } from "../access/carshowcaseAdminOrUser";
 
 export const Pages: CollectionConfig = {
   slug: tenantPrefix.CARSHOWCASE + "pages",
   admin: {
     useAsTitle: "slug",
     defaultColumns: ["slug", "id"],
+  },
+  access: {
+    read: carshowcaseAdminOrUser,
+    update: carshowcaseAdmin,
+    create: carshowcaseAdmin,
+    delete: carshowcaseAdmin
   },
   fields: [
     {

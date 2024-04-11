@@ -1,12 +1,20 @@
 import { CollectionConfig } from "payload/types";
 import { tenantPrefix } from "../../../constants";
 import MetaData from "../../../fields/MetaData";
+import { carshowcaseAdmin } from "../access/carshowcaseAdmin";
+import { carshowcaseAdminOrUser } from "../access/carshowcaseAdminOrUser";
 
 const CarAlbums: CollectionConfig = {
   slug: tenantPrefix.CARSHOWCASE + "car_albums",
   admin: {
     useAsTitle: "slug",
     defaultColumns: ["slug", "cars", "id"],
+  },
+  access: {
+    read: carshowcaseAdminOrUser,
+    update: carshowcaseAdmin,
+    create: carshowcaseAdmin,
+    delete: carshowcaseAdmin,
   },
   fields: [
     {

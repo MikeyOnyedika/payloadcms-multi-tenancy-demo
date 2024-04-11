@@ -32,8 +32,14 @@ export interface Config {
 export interface User {
   id: string;
   username?: string | null;
-  roles?: ('super-admin' | 'tenant-admin')[] | null;
-  tenants?: (string | Tenant)[] | null;
+  roles?: ('super-admin' | 'customer')[] | null;
+  tenants?:
+    | {
+        tenant?: (string | null) | Tenant;
+        roles?: ('admin' | 'user')[] | null;
+        id?: string | null;
+      }[]
+    | null;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -52,6 +58,7 @@ export interface User {
 export interface Tenant {
   id: string;
   name?: string | null;
+  slug?: string | null;
   domains?:
     | {
         domain?: string | null;
