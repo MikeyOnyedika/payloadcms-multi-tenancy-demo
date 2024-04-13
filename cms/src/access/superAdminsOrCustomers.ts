@@ -26,8 +26,6 @@ export const superAdminsOrCustomers: Access<any, User> = ({
       or: [...tenantIdsQuery],
     };
 
-    console.log("queryConstraint: %o", queryConstraint);
-
     return queryConstraint;
   }
 
