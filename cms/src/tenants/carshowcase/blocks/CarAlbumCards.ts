@@ -13,7 +13,7 @@ const CarAlbumCards: Block = {
       name: "albums",
       type: "relationship",
       relationTo: tenantPrefix.CARSHOWCASE + "car_albums",
-      maxDepth: 1,
+      // maxDepth: 2,
       hasMany: true,
     },
   ],

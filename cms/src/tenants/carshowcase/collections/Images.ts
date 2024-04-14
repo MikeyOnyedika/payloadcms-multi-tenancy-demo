@@ -7,7 +7,7 @@ import { carshowcaseAdmin } from "../access/carshowcaseAdmin";
 const Images: CollectionConfig = {
   slug: tenantPrefix.CARSHOWCASE + "images",
   access: {
-    read: carshowcaseAdminOrUser,
+    read: () => true, // Todo: temporarily make it so anyone can access the images
     update: carshowcaseAdmin,
     create: carshowcaseAdmin,
     delete: carshowcaseAdmin,

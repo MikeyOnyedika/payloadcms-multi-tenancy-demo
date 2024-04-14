@@ -5,7 +5,9 @@ import superAdminsOrSelf from "../access/superAdminsOrSelf";
 
 const Users: CollectionConfig = {
   slug: "users",
-  auth: true,
+  auth: {
+    useAPIKey: true,
+  },
   admin: {
     useAsTitle: "email",
     defaultColumns: ["username", "roles"],
@@ -52,7 +54,7 @@ const Users: CollectionConfig = {
           name: "tenant",
           type: "relationship",
           relationTo: "tenants",
-          label: "Tenant"
+          label: "Tenant",
         },
         {
           name: "roles",

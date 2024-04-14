@@ -6,6 +6,10 @@ import { tenantPrefix } from "../../../constants";
 export const carshowcaseAdminOrUser: Access<any, User> = ({ req }) => {
   const carshowcaseSlug = tenantPrefix.CARSHOWCASE;
 
+  if (!req.user) {
+    return false;
+  }
+
   // grant access to super admins
   if (hasRole("super-admin", req.user.roles)) {
     return true;
