@@ -1,13 +1,13 @@
 import { CollectionConfig } from "payload/types";
 import { tenantPrefix } from "../../../constants";
 import path from "path";
-import { carshowcaseAdminOrUser } from "../access/carshowcaseAdminOrUser";
 import { carshowcaseAdmin } from "../access/carshowcaseAdmin";
+import anyone from "../../../access/anyone";
 
 const Images: CollectionConfig = {
   slug: tenantPrefix.CARSHOWCASE + "images",
   access: {
-    read: () => true, // Todo: temporarily make it so anyone can access the images
+    read: anyone,
     update: carshowcaseAdmin,
     create: carshowcaseAdmin,
     delete: carshowcaseAdmin,
