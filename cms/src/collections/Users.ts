@@ -11,7 +11,7 @@ const Users: CollectionConfig = {
   admin: {
     useAsTitle: "email",
     defaultColumns: ["username", "roles"],
-    
+
   },
   access: {
     create: superAdmins,

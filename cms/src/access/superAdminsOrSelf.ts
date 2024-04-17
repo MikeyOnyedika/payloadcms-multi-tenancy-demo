@@ -2,8 +2,9 @@ import { Access } from "payload/config";
 import { User } from "payload/generated-types";
 import { FieldAccess } from "payload/types";
 
-const superAdminsOrSelf: Access<any, User>  = ({ req }) => {
-  if (!req.user){
+// using this access control inside the Users collection
+const superAdminsOrSelf: Access<any, User> = ({ req }) => {
+  if (!req.user) {
     return false;
   }
 

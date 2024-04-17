@@ -2,12 +2,12 @@ import { CollectionConfig } from "payload/types";
 import { tenantPrefix } from "../../../constants";
 import path from "path";
 import { carshowcaseAdmin } from "../access/carshowcaseAdmin";
-import anyone from "../../../access/anyone";
+import visitor from "../access/visitor";
 
 const Images: CollectionConfig = {
   slug: tenantPrefix.CARSHOWCASE + "images",
   access: {
-    read: anyone,
+    read: visitor,
     update: carshowcaseAdmin,
     create: carshowcaseAdmin,
     delete: carshowcaseAdmin,

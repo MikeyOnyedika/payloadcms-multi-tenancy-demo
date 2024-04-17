@@ -2,7 +2,7 @@ import Categories from "./components/Categories";
 import Hero from "./components/Hero";
 import Partners from "./components/Partners";
 import SocialMediaLinks from "./components/SocialMediaLinks";
-import { fetchFooter, fetchHeader, fetchHomePage } from "./lib/cms";
+import { fetchHomePage } from "./lib/cms";
 
 export default async function Home() {
   const res = await fetchHomePage();
