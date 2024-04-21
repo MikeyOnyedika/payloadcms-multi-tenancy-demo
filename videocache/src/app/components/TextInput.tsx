@@ -3,6 +3,9 @@ type Props = {
   name: string;
   type?: "text" | "password";
   placeholder?: string;
+  onChange: (update: { [key: string]: string }) => void
+  value: string,
+  errorMsg?: string
 };
 
 export default function TextInput({
@@ -10,6 +13,9 @@ export default function TextInput({
   label,
   name,
   placeholder = "",
+  onChange,
+  value,
+  errorMsg = ""
 }: Props) {
   return (
     <div className="flex flex-col w-full">
@@ -20,9 +26,12 @@ export default function TextInput({
         id={name}
         type={type}
         name={name}
-        className="rounded p-2 border-gray-400 border-[1px]"
+        className="rounded p-2 border-gray-400 border-[1px] focus:outline-blue-400"
         placeholder={placeholder}
+        onChange={(e) => onChange({ [name]: e.target.value })}
+        value={value}
       />
+      {errorMsg && <p className="text-red-400 text-sm">{errorMsg}</p>}
     </div>
   );
 }

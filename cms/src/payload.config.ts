@@ -9,7 +9,6 @@ import { buildConfig } from "payload/config";
 import Users from "./collections/Users";
 import Tenants from "./collections/Tenants"
 import VideocacheCollections from "./tenants/videocache/collections";
-import VideocacheGlobals from "./tenants/videocache/globals";
 import CarshowcaseCollections from "./tenants/carshowcase/collections";
 import CarshowcaseGlobals from "./tenants/carshowcase/globals";
 
@@ -30,8 +29,6 @@ export default buildConfig({
     ...CarshowcaseCollections,
   ],
   globals: [
-    // videocache-specific globals
-    ...VideocacheGlobals,
 
     // carshowcase-specific globals
     ...CarshowcaseGlobals,
@@ -51,4 +48,5 @@ export default buildConfig({
   db: mongooseAdapter({
     url: process.env.DATABASE_URI,
   }),
+  cors: "*",
 });

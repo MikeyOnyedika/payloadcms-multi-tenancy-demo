@@ -1,15 +1,15 @@
 import { CollectionConfig } from "payload/types";
+import anyone from "../../../access/anyone";
 import { tenantPrefix } from "../../../constants";
-import { videocacheAdminsOrUser } from "../access/videocacheAdminsOrUsers";
 
 export const Users: CollectionConfig = {
   slug: tenantPrefix.VIDEOCACHE + "users",
   auth: true,
   access: {
-    read: videocacheAdminsOrUser,
-    update: videocacheAdminsOrUser,
-    create: videocacheAdminsOrUser,
-    delete: videocacheAdminsOrUser,
+    read: anyone,
+    // update: anyone,
+    create: anyone,
+    // delete: anyone,
   },
   fields: [
     {
@@ -17,5 +17,17 @@ export const Users: CollectionConfig = {
       type: "text",
       required: true,
     },
+    {
+      name: "roles",
+      type: "select",
+      hasMany: true,
+      defaultValue: "user",
+      options: [
+        {
+          value: "user",
+          label: "User"
+        }
+      ]
+    }
   ],
 };

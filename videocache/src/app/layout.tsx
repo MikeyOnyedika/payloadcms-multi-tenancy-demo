@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import ReactQueryProvider from "./contexts/ReactQueryProvider";
+import { Toaster } from "react-hot-toast"
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,7 +18,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`w-screen h-screen flex ${inter.className}`}>{children}</body>
+      <body className={`w-screen h-screen flex ${inter.className}`}>
+        <ReactQueryProvider>
+          <Toaster />
+          {children}
+        </ReactQueryProvider>
+      </body>
     </html>
   );
 }
