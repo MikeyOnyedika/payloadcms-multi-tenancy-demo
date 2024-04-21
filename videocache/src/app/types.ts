@@ -8,7 +8,9 @@ export type SignupBody = {
   password: string
 }
 
-export type User = {
+export type LoginBody = Omit<SignupBody, "username">
+
+type User = {
   collection: string,
   user: {
     id: string,
@@ -21,6 +23,24 @@ export type User = {
 export type SignupRequestResult = {
   status: "success",
   data: {
+    user: {
+      id: string,
+      username: string,
+      email: string
+    }
+  }
+} | {
+  status: "error", error: {
+    field?: string,
+    message: string
+  }
+}
+
+
+export type LoginRequestResult = {
+  status: "success",
+  data: {
+    exp: number,
     user: {
       id: string,
       username: string,
