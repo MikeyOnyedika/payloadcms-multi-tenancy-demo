@@ -260,3 +260,36 @@ export async function getVideo({ id }: { id: string }): Promise<FetchVideoReques
   }
 
 }
+
+
+export async function deleteVideos(videoIds: string[]) {
+  const query = {
+    or: videoIds.map(vId => ({
+      id: {
+        equals: vId
+      }
+    }))
+  };
+  console.log("query: ", query);
+  const stringifiedQuery = qs.stringify({
+    where: query
+  }, {
+    addQueryPrefix: true
+  });
+  try {
+    const { data } = await api.delete(`/videocache__videos${stringifiedQuery}`);
+    return {
+      status: "success",
+      data
+    }
+  } catch (er) {
+    const err = er as AxiosError;
+    if (err.response) {
+      console.log("err.response: ", err.response);
+    }
+    return {
+      status: "error",
+      error: "Couldn't delete video(s)"
+    }
+  }
+}

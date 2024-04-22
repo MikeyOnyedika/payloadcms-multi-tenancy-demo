@@ -1,21 +1,34 @@
 "use client";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import Upload from "./components/Upload";
 import VideoItem from "./components/VideoItem";
 import { useState } from "react";
-import { getVideos } from "@/app/lib";
+import { deleteVideos, getVideos } from "@/app/lib";
 import { useUserContext } from "../contexts/UserProvider";
+import { toast } from "react-hot-toast"
 import { Video } from "@/app/types";
+import LoadingCircle from "@/app/components/LoadingCircle";
 
 export default function Videos() {
   const userData = useUserContext();
   const userId = userData?.user.id as string
   const [videosMarkedForDelete, setVideosMarkedForDelete] = useState<Video[]>([]);
+  const queryClient = useQueryClient();
 
   const { data: videosFetch, isFetching: isFetchingVideos } = useQuery({
     queryKey: ["videocache__videos"],
     queryFn: async () => await getVideos(userId),
     enabled: userData != null
+  });
+
+  const deleteVideosMutation = useMutation({
+    mutationFn: async (ids: string[]) => await deleteVideos(ids),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["videocache__videos"],
+        exact: true
+      });
+    }
   });
 
   function mark(video: Video) {
@@ -27,8 +40,16 @@ export default function Videos() {
     setVideosMarkedForDelete(newVideos);
   }
 
-  function deleteVideos() {
-    console.log("deleting videos...")
+  async function attemptDeleteVideos() {
+    const res = await deleteVideosMutation.mutateAsync(
+      videosMarkedForDelete.map(vid => vid.id)
+    );
+    if (res.status === "success") {
+      setVideosMarkedForDelete([]);
+      toast.success("Video(s) successfully deleted!");
+    } else {
+      toast.error("Failed to delete video(s)");
+    }
   }
 
   let videoListRender = <></>
@@ -70,11 +91,18 @@ export default function Videos() {
         {
           <button
             type="button"
-            onClick={deleteVideos}
+            onClick={attemptDeleteVideos}
             className={`text-red-500 border-2 border-red-500 rounded-md px-4 py-1 hover:bg-red-500 hover:text-white transition-colors duration-300 ${videosMarkedForDelete.length === 0 && "invisible"
               }`}
+            disabled={deleteVideosMutation.isPending}
           >
-            Delete ({videosMarkedForDelete.length})
+            {
+              deleteVideosMutation.isPending ? (
+                <LoadingCircle />
+              ) : (
+                `Delete (${videosMarkedForDelete.length})`
+              )
+            }
           </button>
         }
       </section>
