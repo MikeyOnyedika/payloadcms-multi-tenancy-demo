@@ -1,6 +1,6 @@
 import { AxiosError } from "axios";
 import api from "./axios.config";
-import { FetchVideoRequestResult, FetchVideosRequestResult, GetMeRequestResult, LoginBody, LoginRequestResult, SignupBody, SignupRequestResult, UploadVideoRequestResult } from "../types";
+import { FetchVideoRequestResult, FetchVideosRequestResult, GetMeRequestResult, LoginBody, LoginRequestResult, SignupBody, SignupRequestResult, UpdateUsernameRequestResult, UploadVideoRequestResult } from "../types";
 import qs from "qs"
 
 export async function signup(body: SignupBody): Promise<SignupRequestResult> {
@@ -290,6 +290,34 @@ export async function deleteVideos(videoIds: string[]) {
     return {
       status: "error",
       error: "Couldn't delete video(s)"
+    }
+  }
+}
+
+export async function updateUsername({ username, userId }: { username: string, userId: string }): Promise<UpdateUsernameRequestResult> {
+  try {
+    const { data } = await api.patch(`videocache__users/${userId}`, {
+      username
+    });
+    return {
+      status: "success",
+      data: {
+        username: data.doc.username,
+        id: data.doc.id
+      }
+    }
+  } catch (er) {
+    const err = er as AxiosError;
+    const status = "error";
+    if (err.response) {
+      return {
+        status,
+        error: "Couldn't update username"
+      }
+    }
+    return {
+      status,
+      error: "Couldn't complete request"
     }
   }
 }

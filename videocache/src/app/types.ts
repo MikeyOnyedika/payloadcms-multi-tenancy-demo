@@ -96,3 +96,14 @@ export type FetchVideoRequestResult = {
   status: "error",
   error: string
 }
+
+export type UpdateUsernameRequestResult = {
+  status: "success",
+  data: {
+    username: string,
+    id: string
+  }
+} | {
+  status: "error",
+  error: string
+}
