@@ -10,6 +10,6 @@ export default function MainSiteLayout({ children }: { children: ReactNode }) {
         <Header />
         {children}
       </section>
-    </main>
+    </main >
   );
 }

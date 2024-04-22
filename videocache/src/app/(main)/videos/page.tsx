@@ -1,4 +1,5 @@
 "use client";
+import Upload from "./components/Upload";
 import VideoItem from "./components/VideoItem";
 import { useEffect, useState } from "react";
 
@@ -38,19 +39,19 @@ export default function Videos() {
     setVideosMarkedForDelete(newVideos);
   }
 
-  function deleteVideos(){
+  function deleteVideos() {
     console.log("deleting videos...")
   }
 
   return (
     <section className="p-2 md:p-4 flex flex-col gap-2">
+      <Upload />
       <section className="flex justify-end">
         <button
           type="button"
           onClick={deleteVideos}
-          className={`text-red-500 border-2 border-red-500 rounded-md px-4 py-1 hover:bg-red-500 hover:text-white transition-colors duration-300 ${
-            videosMarkedForDelete.length === 0 && "invisible"
-          }`}
+          className={`text-red-500 border-2 border-red-500 rounded-md px-4 py-1 hover:bg-red-500 hover:text-white transition-colors duration-300 ${videosMarkedForDelete.length === 0 && "invisible"
+            }`}
         >
           Delete ({videosMarkedForDelete.length})
         </button>

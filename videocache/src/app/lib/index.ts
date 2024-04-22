@@ -1,6 +1,6 @@
 import { AxiosError } from "axios";
 import api from "./axios.config";
-import { LoginBody, LoginRequestResult, SignupBody, SignupRequestResult } from "../types";
+import { GetMeRequestResult, LoginBody, LoginRequestResult, SignupBody, SignupRequestResult, UploadVideoRequestResult } from "../types";
 
 export async function signup(body: SignupBody): Promise<SignupRequestResult> {
   try {
@@ -114,5 +114,87 @@ export async function login(body: LoginBody): Promise<LoginRequestResult> {
         message: err.message
       }
     }
+  }
+}
+
+export async function uploadVideo({
+  video, updateProgress, userId, signal
+}: {
+  video: File, updateProgress: (update: number) => void, userId: string, signal: AbortSignal
+}): Promise<UploadVideoRequestResult> {
+  try {
+    const formData = new FormData();
+    formData.append("owner", userId);
+    formData.append("file", video);
+    const { data } = await api.post("/videocache__videos", formData, {
+      onUploadProgress: (progressEvent) => {
+        if (progressEvent.progress) {
+          const progress = Math.round(progressEvent.progress * 100);
+          updateProgress(progress);
+        }
+      },
+      signal
+    });
+
+    return {
+      status: "success",
+      data: {
+        id: data.doc.id,
+        url: data.doc.url,
+      }
+    }
+  } catch (er) {
+    const status = "error"
+    const err = er as AxiosError
+    if (err.response) {
+      return {
+        status,
+        error: "Couldn't upload video"
+      }
+    }
+
+    if (err.request) {
+      return {
+        status,
+        error: "Couldn't complete request"
+      }
+    }
+
+    return {
+      status,
+      error: err.message
+    }
+  }
+}
+
+
+export async function getMe(): Promise<GetMeRequestResult> {
+  try {
+    const { data } = await api.get("/videocache__users/me");
+    if (data.user) {
+      return {
+        status: "success",
+        data: {
+          exp: data.exp,
+          user: {
+            id: data.user.id,
+            username: data.user.username,
+            email: data.user.email
+          }
+        }
+      }
+    }
+
+    return {
+      status: "error",
+      error: "Couldn't find user",
+    }
+
+  } catch (err) {
+    return {
+      status: "error",
+      error: "Something went wrong."
+    }
+
   }
 }

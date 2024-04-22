@@ -1,3 +1,16 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+/*TODO: I CAN'T GET PROGRESS BAR TO BE STYLED CORRECTLY. nOT SURE WHY*/
+.progress{
+	appearance: none;
+	-webkit-appearance: none;
+	/*set background color firefox-specific*/
+	@apply bg-gray-50 rounded-md border-2 border-blue-500 accent-blue-500;
+}
+
+.progress::-webkit-progress-bar{
+	@apply bg-gray-50 rounded-md border-2 border-blue-500;
+}
