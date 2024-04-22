@@ -26,7 +26,7 @@ export type SignupRequestResult = {
   }
 }
 
-type User = {
+export type User = {
   id: string,
   username: string,
   email: string
@@ -62,6 +62,35 @@ export type UploadVideoRequestResult = {
   data: {
     id: string,
     url: string
+  }
+} | {
+  status: "error",
+  error: string
+}
+
+export type Video = {
+  id: string,
+  owner: User,
+  filename: string,
+  mimeType: string,
+  filesize: number,
+  url: string
+}
+
+export type FetchVideosRequestResult = {
+  status: "success",
+  data: {
+    videos: Video[]
+  }
+} | {
+  status: "error",
+  error: string
+}
+
+export type FetchVideoRequestResult = {
+  status: "success",
+  data: {
+    video: Video
   }
 } | {
   status: "error",

@@ -1,6 +1,7 @@
 import { AxiosError } from "axios";
 import api from "./axios.config";
-import { GetMeRequestResult, LoginBody, LoginRequestResult, SignupBody, SignupRequestResult, UploadVideoRequestResult } from "../types";
+import { FetchVideoRequestResult, FetchVideosRequestResult, GetMeRequestResult, LoginBody, LoginRequestResult, SignupBody, SignupRequestResult, UploadVideoRequestResult } from "../types";
+import qs from "qs"
 
 export async function signup(body: SignupBody): Promise<SignupRequestResult> {
   try {
@@ -169,6 +170,7 @@ export async function uploadVideo({
 
 
 export async function getMe(): Promise<GetMeRequestResult> {
+
   try {
     const { data } = await api.get("/videocache__users/me");
     if (data.user) {
@@ -184,17 +186,77 @@ export async function getMe(): Promise<GetMeRequestResult> {
         }
       }
     }
-
     return {
       status: "error",
       error: "Couldn't find user",
     }
-
   } catch (err) {
     return {
       status: "error",
       error: "Something went wrong."
     }
-
   }
+
+}
+
+export async function getVideos(userId: string): Promise<FetchVideosRequestResult> {
+
+  const query = {
+    owner: {
+      equals: userId
+    }
+  };
+
+  const stringifiedQuery = qs.stringify(
+    {
+      where: query,
+    },
+    {
+      addQueryPrefix: true,
+    }
+  );
+
+  try {
+    const { data } = await api.get(`/videocache__videos?${stringifiedQuery}`);
+    return {
+      status: "success",
+      data: {
+        videos: data.docs
+      }
+    }
+  } catch (err) {
+    return {
+      status: "error",
+      error: "Couldn't fetch user videos"
+    }
+  }
+
+}
+
+
+export async function getVideo({ id }: { id: string }): Promise<FetchVideoRequestResult> {
+
+  try {
+    const { data } = await api.get(`/videocache__videos/${id}`);
+    return {
+      status: "success",
+      data: {
+        video: data
+      }
+    }
+  } catch (er) {
+    const err = er as AxiosError;
+    if (err.response) {
+      const error = (err.response.data as any).errors[0].message
+      return {
+        status: "error",
+        error
+      }
+    }
+    return {
+      status: "error",
+      error: "Couldn't get video"
+    }
+  }
+
 }

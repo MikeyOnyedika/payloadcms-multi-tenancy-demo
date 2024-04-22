@@ -1,28 +1,30 @@
-import { getMe, uploadVideo } from "@/app/lib";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { uploadVideo } from "@/app/lib";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState, ChangeEvent, MouseEvent, Dispatch, SetStateAction } from "react";
 import toast from "react-hot-toast";
 
 let uploadAbortController = new AbortController();
 
-export default function Upload() {
+export default function Upload({ userId }: { userId: string }) {
     const fieldName = "fileUpload"
     const [file, setFile] = useState<File | null>(null);
     const allowedFileTypes = ["video/mp4", "video/x-matroska", ".mp4", ".mkv"]
     const allowedFileTypesString = allowedFileTypes.join(", ")
     const [uploadProgress, setUploadProgress] = useState(0);
-
-    // get the user id,
-    const { data: userData, isFetching: isFetchingUserData } = useQuery({
-        queryKey: ["videocache__users", "me"],
-        queryFn: async () => await getMe(),
-    });
+    const queryClient = useQueryClient();
 
     const uploadMutation = useMutation({
         mutationKey: ["videocache__videos", "new"],
         mutationFn: async ({ file, userId, updateProgress }: {
             file: File, userId: string, updateProgress: Dispatch<SetStateAction<number>>
-        }) => await uploadVideo({ video: file, updateProgress, userId, signal: uploadAbortController.signal })
+        }) => await uploadVideo({ video: file, updateProgress, userId, signal: uploadAbortController.signal }),
+        onSuccess: () => {
+            // make react-query refetch the list of videos
+            queryClient.invalidateQueries({
+                queryKey: ["videocache__videos"],
+                exact: true
+            })
+        }
     });
 
     function handleOnChange(e: ChangeEvent<HTMLInputElement>) {
@@ -52,15 +54,8 @@ export default function Upload() {
             return;
         };
 
-        if (userData?.status !== "success") {
-            toast.error("It seems your session has expired");
-            return;
-        }
-
-        let user = userData.data.user;
-
         if (file) {
-            const res = await uploadMutation.mutateAsync({ userId: user.id, updateProgress: setUploadProgress, file });
+            const res = await uploadMutation.mutateAsync({ userId, updateProgress: setUploadProgress, file });
             if (res.status === "error") {
                 toast.error("Failed to upload video");
             } else {
