@@ -33,11 +33,11 @@ export default buildConfig({
     // carshowcase-specific globals
     ...CarshowcaseGlobals,
   ],
-  upload: {
-    limits: {
-      fileSize: 1024 * 1024 * 50, // 50MB
-    },
-  },
+  // upload: {
+  //   limits: {
+  //     fileSize: 1024 * 1024 * 50, // 50MB
+  //   },
+  // },
   typescript: {
     outputFile: path.resolve(__dirname, "payload-types.ts"),
   },
@@ -48,5 +48,5 @@ export default buildConfig({
   db: mongooseAdapter({
     url: process.env.DATABASE_URI,
   }),
-  cors: "*",
+  cors: ["http://localhost:3000", "http://localhost:3001"],
 });

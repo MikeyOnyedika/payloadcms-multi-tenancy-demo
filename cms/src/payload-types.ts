@@ -11,7 +11,6 @@ export interface Config {
     users: User;
     tenants: Tenant;
     videocache__users: Videocache_User;
-    videocache__pages: Videocache_Page;
     videocache__videos: Videocache_Video;
     carshowcase__pages: Carshowcase_Page;
     carshowcase__images: Carshowcase_Image;
@@ -20,7 +19,6 @@ export interface Config {
     'payload-migrations': PayloadMigration;
   };
   globals: {
-    videocache__nav: Videocache_Nav;
     carshowcase__footer: Carshowcase_Footer;
     carshowcase__header: Carshowcase_Header;
   };
@@ -32,16 +30,19 @@ export interface Config {
 export interface User {
   id: string;
   username?: string | null;
-  roles?: ('super-admin' | 'customer')[] | null;
+  roles: ('super-admin' | 'customer')[];
   tenants?:
     | {
         tenant?: (string | null) | Tenant;
-        roles?: ('admin' | 'user')[] | null;
+        roles: ('admin' | 'user')[];
         id?: string | null;
       }[]
     | null;
   updatedAt: string;
   createdAt: string;
+  enableAPIKey?: boolean | null;
+  apiKey?: string | null;
+  apiKeyIndex?: string | null;
   email: string;
   resetPasswordToken?: string | null;
   resetPasswordExpiration?: string | null;
@@ -58,7 +59,7 @@ export interface User {
 export interface Tenant {
   id: string;
   name?: string | null;
-  slug?: string | null;
+  slug: string;
   domains?:
     | {
         domain?: string | null;
@@ -88,24 +89,11 @@ export interface Videocache_User {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "videocache__pages".
- */
-export interface Videocache_Page {
-  id: string;
-  metaInfo?: {
-    title?: string | null;
-    description?: string | null;
-  };
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "videocache__videos".
  */
 export interface Videocache_Video {
   id: string;
-  title?: string | null;
+  owner: string | Videocache_User;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -283,22 +271,6 @@ export interface PayloadMigration {
   batch?: number | null;
   updatedAt: string;
   createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "videocache__nav".
- */
-export interface Videocache_Nav {
-  id: string;
-  navItem?:
-    | {
-        title?: string | null;
-        url?: string | null;
-        id?: string | null;
-      }[]
-    | null;
-  updatedAt?: string | null;
-  createdAt?: string | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
