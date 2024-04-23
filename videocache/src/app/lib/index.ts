@@ -296,7 +296,7 @@ export async function deleteVideos(videoIds: string[]) {
 
 export async function updateUsername({ username, userId }: { username: string, userId: string }): Promise<UpdateUsernameRequestResult> {
   try {
-    const { data } = await api.patch(`videocache__users/${userId}`, {
+    const { data } = await api.patch(`/videocache__users/${userId}`, {
       username
     });
     return {
@@ -318,6 +318,21 @@ export async function updateUsername({ username, userId }: { username: string, u
     return {
       status,
       error: "Couldn't complete request"
+    }
+  }
+}
+
+export async function signOut() {
+  try {
+    const { data } = await api.post("/videocache__users/logout");
+    return {
+      status: "success"
+    }
+  } catch (er) {
+    const err = er as AxiosError;
+    return {
+      status: "error",
+      error: "Something went wrong"
     }
   }
 }

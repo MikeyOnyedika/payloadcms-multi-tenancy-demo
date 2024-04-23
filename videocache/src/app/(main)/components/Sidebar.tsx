@@ -6,6 +6,8 @@ import {
   BsDoorOpen as LogoutIcon,
 } from "react-icons/bs";
 import { IconContext } from "react-icons";
+import { signOut } from "@/app/lib";
+import { useMutation } from "@tanstack/react-query";
 
 export default function Sidebar() {
   const navItems = [
@@ -20,6 +22,10 @@ export default function Sidebar() {
       Icon: SettingsIcon,
     },
   ];
+
+  const logoutMutation = useMutation({
+    mutationFn: async () => await signOut(),
+  });
 
   return (
     <section className="w-full max-w-[8rem] h-full shadow-md overflow-y-auto flex flex-col gap-3 p-4">
@@ -40,7 +46,9 @@ export default function Sidebar() {
             </li>
           ))}
         </ul>
-        <button className="text-blue-500 h-fit hover:underline hover:text-blue-700 flex items-center gap-2">
+        <button onClick={() => {
+          logoutMutation.mutate();
+        }} type="button" className="text-blue-500 h-fit hover:underline hover:text-blue-700 flex items-center gap-2">
           <IconContext.Provider value={{ className: "text-xl" }}>
             <LogoutIcon />
           </IconContext.Provider>

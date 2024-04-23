@@ -1,7 +1,6 @@
 'use client'
 import TextInput from "@/app/components/TextInput";
 import { FormEvent, useState } from "react";
-import dynamic from "next/dynamic";
 import { useUserContext } from "../contexts/UserProvider";
 import { toast } from "react-hot-toast"
 import SubmitBtn from "@/app/components/SubmitBtn";
@@ -46,9 +45,6 @@ export default function Settings() {
         />
         <SubmitBtn disabled={false} label="Change" />
       </form>
-      <button className="bg-red-500 hover:bg-red-700 transition-colors duration-300 w-fit rounded-md h-fit px-4 py-2 text-gray-50">
-        Delete Account
-      </button>
     </section>
   );
 
